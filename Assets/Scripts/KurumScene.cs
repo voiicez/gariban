@@ -84,8 +84,8 @@ public class KurumScene : MonoBehaviour
 
         // PlayerManager veya GameManager gibi bir scriptte bu bilgileri saklayabilirsiniz
         // Örneðin:
-         PlayerManager.Instance.SetPlayerCount(playerCount);
-         PlayerManager.Instance.SetPlayerNames(playerNames);
+        PlayerManager.Instance.SetPlayerCount(playerCount);
+        PlayerManager.Instance.SetPlayerNames(playerNames);
 
         // Oyunculara rolleri rastgele ata
         List<string> roles = new List<string>();
@@ -105,12 +105,12 @@ public class KurumScene : MonoBehaviour
 
             // Burada oyuncu adý ve rolünü saklamak için istediðiniz þekilde iþlem yapabilirsiniz
             // Örneðin:
-            // PlayerManager.Instance.SetPlayerRole(playerName, role);
+            PlayerManager.Instance.SetPlayerRole(playerName, role);
 
-            Debug.Log(playerName + " - " + role);
+           
         }
 
-        //SceneManager.LoadScene("OyunEkranýScene"); // Oyun ekraný sahnesine geçiþ yapýlacak sahne adýný buraya yazýn
+        SceneManager.LoadScene("OyunScene"); // Oyun ekraný sahnesine geçiþ yapýlacak sahne adýný buraya yazýn
     }
 
     private void ShuffleRoles(List<string> roles)

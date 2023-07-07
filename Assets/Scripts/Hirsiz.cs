@@ -15,12 +15,12 @@ public class Hirsiz : Karakterler
         if (hazir && coin >= 30)
         {
             int totalCoin = 0;
-            foreach (var gariban in Manager.Instance._characters)
+            foreach (var player in OyunEkrani.Instance.players)
             {
-                if (gariban is Gariban)
+                if (player is Gariban)
                 {
-                    totalCoin += gariban.coin;
-                    gariban.coin = 0;
+                    totalCoin += player.coin;
+                    player.coin = 0;
                 }
             }
             coin += totalCoin;
@@ -31,5 +31,7 @@ public class Hirsiz : Karakterler
         {
             Debug.Log("Hýrsýzýn özelliði henüz aktif deðil veya yeterli para yok.");
         }
+        Debug.Log("Hýrsýz Yeteneðini Aktifleþtirdi.");
     }
+
 }

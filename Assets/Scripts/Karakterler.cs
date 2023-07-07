@@ -22,4 +22,25 @@ public class Karakterler  //Herhangi bir karakteri tanýmlar
         //
     }
 
+    public string GetName()
+    {
+        return name;
+    }
+
+    public int GetCoin()
+    {
+        return coin;
+    }
+
+    public string GetRole()
+    {
+        return PlayerManager.Instance.GetPlayerRole(name);
+        
+    }
+
+    public string GetDescription()
+    {
+        return aciklama;
+    }
+
 }
