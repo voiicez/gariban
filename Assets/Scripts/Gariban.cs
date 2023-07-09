@@ -14,8 +14,17 @@ public class Gariban : Karakterler
 
     public override void PerformAbility()
     {
-        Debug.Log("Gariban rolü gerçekleþtirildi.");
+        Debug.Log("Gariban rolï¿½ gerï¿½ekleï¿½tirildi.");
         coin += 1;
+    }
+
+    public int GetCoin()
+    {
+        return coin;
+    }
+    public void SetCoin(int newCoin)
+    {
+        coin = newCoin;
     }
 
 }

@@ -4,18 +4,23 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using System.Linq;
 
 public class OyunEkrani : MonoBehaviour
 {
     public Transform playerBoxContainer;
     public PlayerBox playerBoxPrefab;
-
+    public TextMeshProUGUI oyuncuSiraText;
     private List<string> playerNames;
     public List<Karakterler> players;
     private int currentPlayerIndex;
     private PlayerBox currentPlayerBox;
-
+    public GameObject siraGosterici;
+    public GameObject oyunScreen;
+    public Animator animation;
     public static OyunEkrani Instance;
+   
+    
 
     private void Awake()
     {
@@ -31,36 +36,42 @@ public class OyunEkrani : MonoBehaviour
 
     private void Start()
     {
+        
         playerNames = PlayerManager.Instance.GetPlayerNames();
         players = new List<Karakterler>();
         currentPlayerIndex = 0;
-
-        // Her oyuncuya rol atayalým
+        ShufflePlayerNames();
+        oyunScreen.SetActive(false);
+        siraGosterici.SetActive(true);
+        animation.SetTrigger("anim");
+        
+        // Her oyuncuya rol atayalï¿½m
         foreach (string playerName in playerNames)
         {
             string role = PlayerManager.Instance.GetPlayerRole(playerName);
             Karakterler player;
 
-            if (role == "Hýrsýz")
+            if (role == "Hirsiz")
             {
-                player = new Hirsiz(playerName, 100, 30, true, "Hýrsýz her tur para kazanmaz. Sadece bir kez tüm Garibanlarýn parasýný çalabilir. Dikkatli kullan!");
+                player = new Hirsiz(playerName, 100, 30, true, "HÄ±rsÄ±z her tur para kazanmaz. Sadece bir kez tÃ¼m GaribanlarÄ±n parasÄ±nÄ± Ã§alabilir. Dikkatli kullan!");
             }
             else if (role == "Gariban")
             {
-                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altýn kazanýr.");
+                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altÄ±n kazanÄ±r.");
             }
             else
             {
-                // Bilinmeyen rol, varsayýlan olarak Gariban olarak ata
-                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altýn kazanýr.");
+                // Bilinmeyen rol, varsayï¿½lan olarak Gariban olarak ata
+                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altÄ±n kazanÄ±r.");
             }
 
             players.Add(player);
             CreatePlayerBox(player);
         }
 
-        // Ýlk oyuncunun bilgilerini göster
+        // ï¿½lk oyuncunun bilgilerini gï¿½ster
         ShowPlayerInfo(players[currentPlayerIndex]);
+        oyuncuSiraText.text = players[currentPlayerIndex].name;
     }
 
 
@@ -70,6 +81,8 @@ public class OyunEkrani : MonoBehaviour
         PlayerBox playerBox = Instantiate(playerBoxPrefab, playerBoxContainer);
         playerBox.Initialize(player);
         playerBox.actionButton.onClick.AddListener(playerBox.OnActionButtonClick);
+        playerBox.gecButton.onClick.AddListener(playerBox.OnGecButtonClick);
+        
     }
 
 
@@ -80,6 +93,9 @@ public class OyunEkrani : MonoBehaviour
         currentPlayerBox = playerBoxContainer.GetChild(playerBoxIndex).GetComponent<PlayerBox>();
         currentPlayerBox.Initialize(player);
         currentPlayerBox.actionButton.gameObject.SetActive(true);
+        currentPlayerBox.gecButton.gameObject.SetActive(true);
+        
+        
     }
 
 
@@ -94,7 +110,34 @@ public class OyunEkrani : MonoBehaviour
             currentPlayerIndex = 0;
         }
 
-        // Ýlgili oyuncunun bilgilerini göster
+        // ï¿½lgili oyuncunun bilgilerini gï¿½ster
         ShowPlayerInfo(players[currentPlayerIndex]);
+        oyunScreen.SetActive(false);
+        animation.SetTrigger("anim");
+        siraGosterici.SetActive(true);
+        oyuncuSiraText.text = players[currentPlayerIndex].name;
     }
+
+   
+    public void HandleSiraSende()
+    {
+        oyunScreen.SetActive(true);
+        siraGosterici.SetActive(false);
+    }
+
+    private void ShufflePlayerNames()
+    {
+        System.Random random = new System.Random();
+        int n = playerNames.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            string value = playerNames[k];
+            playerNames[k] = playerNames[n];
+            playerNames[n] = value;
+        }
+    }
+
+
 }

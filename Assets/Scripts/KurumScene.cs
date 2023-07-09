@@ -12,28 +12,74 @@ public class KurumScene : MonoBehaviour
     public RectTransform playerNameInputContainer;
     public Button hazirButton;
     public TMP_InputField playerCountInput;
-    private int playerCount;
+    public int playerCount;
     private List<string> playerNames;
     private List<TMP_InputField> playerNameInputs;
+    public TextMeshProUGUI playerCountText;
 
     private void Start()
     {
-        hazirButton.interactable = false; // Baþlangýçta hazýr düðmesi etkisiz olsun
+        hazirButton.interactable = false; // Baï¿½langï¿½ï¿½ta hazï¿½r dï¿½ï¿½mesi etkisiz olsun
+        playerCount = 3;
     }
 
-    public void HandleContinueButton()
+    public void OyuncuSayisiArttir()
     {
-        playerCount = int.Parse(playerCountInput.text);
+        if (playerCount < 9)
+        {
+            playerCount++;
+            playerCountText.text = playerCount.ToString();
+            playerNames = new List<string>();
+            playerNameInputs = new List<TMP_InputField>();
+
+            // ï¿½nceki isim giriï¿½ alanlarï¿½nï¿½ temizle
+            foreach (Transform child in playerNameInputContainer)
+            {
+                Destroy(child.gameObject);
+            }
+
+            // Yeni isim giriï¿½ alanlarï¿½nï¿½ oluï¿½tur
+            for (int i = 0; i < playerCount; i++)
+            {
+                InstantiatePlayerNameInput();
+            }
+        }
+    }
+    public void OyuncuSayisiAzalt()
+    {
+        if (playerCount > 3) { 
+        playerCount--;
+        playerCountText.text = playerCount.ToString();
         playerNames = new List<string>();
         playerNameInputs = new List<TMP_InputField>();
 
-        // Önceki isim giriþ alanlarýný temizle
+        // ï¿½nceki isim giriï¿½ alanlarï¿½nï¿½ temizle
         foreach (Transform child in playerNameInputContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // Yeni isim giriþ alanlarýný oluþtur
+        // Yeni isim giriï¿½ alanlarï¿½nï¿½ oluï¿½tur
+        for (int i = 0; i < playerCount; i++)
+        {
+            InstantiatePlayerNameInput();
+        }
+       }
+    }
+
+    public void HandleContinueButton()
+    {
+        //playerCount = int.Parse(playerCountInput.text);
+        playerNames = new List<string>();
+        playerNameInputs = new List<TMP_InputField>();
+
+        // ï¿½nceki isim giriï¿½ alanlarï¿½nï¿½ temizle
+        foreach (Transform child in playerNameInputContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Yeni isim giriï¿½ alanlarï¿½nï¿½ oluï¿½tur
         for (int i = 0; i < playerCount; i++)
         {
             InstantiatePlayerNameInput();
@@ -45,7 +91,7 @@ public class KurumScene : MonoBehaviour
         GameObject playerNameInputObj = Instantiate(playerNameInputPrefab, playerNameInputContainer);
         TMP_InputField playerNameInput = playerNameInputObj.GetComponent<TMP_InputField>();
 
-        playerNameInput.onEndEdit.AddListener(OnPlayerNameInputEndEdit); // Input alanýnýn doldurulduðunda OnPlayerNameInputEndEdit metodu tetiklensin
+        playerNameInput.onEndEdit.AddListener(OnPlayerNameInputEndEdit); // Input alanï¿½nï¿½n doldurulduï¿½unda OnPlayerNameInputEndEdit metodu tetiklensin
 
         playerNameInputs.Add(playerNameInput);
     }
@@ -56,19 +102,19 @@ public class KurumScene : MonoBehaviour
 
         if (playerNames.Count == playerCount)
         {
-            hazirButton.interactable = true; // Hazýr düðmesini etkinleþtir
+            hazirButton.interactable = true; // Hazï¿½r dï¿½ï¿½mesini etkinleï¿½tir
         }
         else
         {
-            hazirButton.interactable = false; // Hazýr düðmesini devre dýþý býrak
+            hazirButton.interactable = false; // Hazï¿½r dï¿½ï¿½mesini devre dï¿½ï¿½ï¿½ bï¿½rak
         }
     }
 
     private void UpdatePlayerNames()
     {
-        playerNames.Clear(); // Tüm isimleri temizle
+        playerNames.Clear(); // Tï¿½m isimleri temizle
 
-        // Tüm input alanlarýný kontrol et ve isimleri kaydet
+        // Tï¿½m input alanlarï¿½nï¿½ kontrol et ve isimleri kaydet
         foreach (TMP_InputField playerNameInput in playerNameInputs)
         {
             if (!string.IsNullOrEmpty(playerNameInput.text))
@@ -83,34 +129,34 @@ public class KurumScene : MonoBehaviour
         UpdatePlayerNames();
 
         // PlayerManager veya GameManager gibi bir scriptte bu bilgileri saklayabilirsiniz
-        // Örneðin:
+        // ï¿½rneï¿½in:
         PlayerManager.Instance.SetPlayerCount(playerCount);
         PlayerManager.Instance.SetPlayerNames(playerNames);
 
         // Oyunculara rolleri rastgele ata
         List<string> roles = new List<string>();
-        roles.Add("Hýrsýz"); // Hýrsýz rolünü ekle
+        roles.Add("Hirsiz"); // Hï¿½rsï¿½z rolï¿½nï¿½ ekle
         for (int i = 1; i < playerCount; i++)
         {
-            roles.Add("Gariban"); // Gariban rolünü ekle
+            roles.Add("Gariban"); // Gariban rolï¿½nï¿½ ekle
         }
 
-        ShuffleRoles(roles); // Rollerin sýrasýný rastgele karýþtýr
+        ShuffleRoles(roles); // Rollerin sï¿½rasï¿½nï¿½ rastgele karï¿½ï¿½tï¿½r
 
-        // Her oyuncuya rolü atayalým
+        // Her oyuncuya rolï¿½ atayalï¿½m
         for (int i = 0; i < playerCount; i++)
         {
             string playerName = playerNames[i];
             string role = roles[i];
 
-            // Burada oyuncu adý ve rolünü saklamak için istediðiniz þekilde iþlem yapabilirsiniz
-            // Örneðin:
+            // Burada oyuncu adï¿½ ve rolï¿½nï¿½ saklamak iï¿½in istediï¿½iniz ï¿½ekilde iï¿½lem yapabilirsiniz
+            // ï¿½rneï¿½in:
             PlayerManager.Instance.SetPlayerRole(playerName, role);
 
            
         }
 
-        SceneManager.LoadScene("OyunScene"); // Oyun ekraný sahnesine geçiþ yapýlacak sahne adýný buraya yazýn
+        SceneManager.LoadScene("OyunScene"); // Oyun ekranï¿½ sahnesine geï¿½iï¿½ yapï¿½lacak sahne adï¿½nï¿½ buraya yazï¿½n
     }
 
     private void ShuffleRoles(List<string> roles)

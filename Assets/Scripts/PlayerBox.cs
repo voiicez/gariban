@@ -9,7 +9,7 @@ public class PlayerBox : MonoBehaviour
     public TextMeshProUGUI playerCoinText;
     public TextMeshProUGUI playerDescriptionText;
     public Button actionButton;
-
+    public Button gecButton;
     private Karakterler player;
 
     public static PlayerBox Instance;
@@ -43,6 +43,11 @@ public class PlayerBox : MonoBehaviour
     public void OnActionButtonClick()
     {
         player.PerformAbility();
+        OyunEkrani.Instance.PerformCurrentPlayerAction();
+    }
+    public void OnGecButtonClick()
+    {
+        //Boş geçildi.
         OyunEkrani.Instance.PerformCurrentPlayerAction();
     }
 }

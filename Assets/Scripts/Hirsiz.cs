@@ -4,34 +4,27 @@ using UnityEngine;
 
 public class Hirsiz : Karakterler
 {
-    public bool hazir; //default ne ? SORUN ÇIKARABİLİR.
+    public bool hazir;
+    private Gariban secilmisGariban;
     public Hirsiz(string name, int can, int coin,bool hazir,string aciklama) : base(name, can, coin,aciklama)
     {
         this.hazir = hazir;
+        secilmisGariban = null;
     }
 
     public override void PerformAbility()
     {
-        if (hazir && coin >= 30)
+        if (secilmisGariban != null && hazir)
         {
-            int totalCoin = 0;
-            foreach (var player in OyunEkrani.Instance.players)
-            {
-                if (player is Gariban)
-                {
-                    totalCoin += player.coin;
-                    player.coin = 0;
-                }
-            }
-            coin += totalCoin;
-            hazir = false;
-            Debug.Log("Hırsız butona bastı! Garibanların tüm paraları Hırsız'a aktarıldı.");
+            int stolenCoins = secilmisGariban.GetCoin();
+            secilmisGariban.SetCoin(0); // SeÃ§ili garibanÄ±n parasÄ±nÄ± sÄ±fÄ±rla
+            coin+=(stolenCoins); // HÄ±rsÄ±zÄ±n parasÄ±na Ã§alÄ±nan parayÄ± ekle
         }
-        else
-        {
-            Debug.Log("Hırsızın özelliği henüz aktif değil veya yeterli para yok.");
-        }
-        Debug.Log("Hırsız Yeteneğini Aktifleştirdi.");
+        hazir = false;
+         
+       
+        Debug.Log("Hï¿½rsï¿½z Yeteneï¿½ini Aktifleï¿½tirdi.");
     }
+
 
 }
