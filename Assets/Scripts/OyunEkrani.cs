@@ -80,7 +80,8 @@ public class OyunEkrani : MonoBehaviour
     private void CreatePlayerBox(Karakterler player)
     {
         PlayerBox playerBox = Instantiate(playerBoxPrefab, playerBoxContainer);
-        playerBox.Initialize(player);
+        List<string> garibanIsimleri = players.Where(p => p is Gariban).Select(p => p.GetName()).ToList();
+        playerBox.Initialize(player,garibanIsimleri);
         playerBox.actionButton.onClick.AddListener(playerBox.OnActionButtonClick);
         playerBox.gecButton.onClick.AddListener(playerBox.OnGecButtonClick);
         
@@ -92,7 +93,8 @@ public class OyunEkrani : MonoBehaviour
     {
         int playerBoxIndex = currentPlayerIndex % playerBoxContainer.childCount;
         currentPlayerBox = playerBoxContainer.GetChild(playerBoxIndex).GetComponent<PlayerBox>();
-        currentPlayerBox.Initialize(player);
+        List<string> garibanIsimleri = players.Where(p => p is Gariban).Select(p => p.GetName()).ToList();
+        currentPlayerBox.Initialize(player, garibanIsimleri);
         currentPlayerBox.actionButton.gameObject.SetActive(false);
 
         if (player is not Gariban)

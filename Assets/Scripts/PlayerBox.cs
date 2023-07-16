@@ -16,6 +16,7 @@ public class PlayerBox : MonoBehaviour
     public TextMeshProUGUI hedef2;
     public static PlayerBox Instance;
     public Image hedefListImg;
+    public TMP_Dropdown dropdown;
 
     private void Awake()
     {
@@ -29,25 +30,25 @@ public class PlayerBox : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void Initialize(Karakterler player)
+    public void Initialize(Karakterler player, List<string> garibanIsimleri)
     {
         this.player = player;
         playerNameText.text = player.GetName();
         playerRoleText.text = player.GetRole();
         playerCoinText.text = player.GetCoin().ToString();
         playerDescriptionText.text = player.GetDescription();
-        hedefListImg.gameObject.SetActive(true);
-        List<string> garibanIsimleri = PlayerManager.Instance.playerNames.FindAll(name => name != player.GetName());
-        hedef1.text = garibanIsimleri[0];
-        hedef2.text = garibanIsimleri[1];
 
-
-
-        if (player is Gariban)
+        if (player is Hirsiz hirsiz)
         {
-            hedefListImg.gameObject.SetActive(false);
+            dropdown.gameObject.SetActive(true);
+            dropdown.ClearOptions();
+            dropdown.AddOptions(garibanIsimleri);
+            dropdown.gameObject.SetActive(true);
         }
-        
+        else
+        {
+            dropdown.gameObject.SetActive(false);
+        }
     }
 
 
@@ -56,6 +57,14 @@ public class PlayerBox : MonoBehaviour
 
     public void OnActionButtonClick()
     {
+        #region Hirsiz Durumu
+        if (player is Hirsiz hirsiz)
+        {
+            string selectedGaribanName = dropdown.options[dropdown.value].text;
+            Gariban selectedGariban = OyunEkrani.Instance.players.Find(p => p is Gariban && p.GetName() == selectedGaribanName) as Gariban;
+            hirsiz.SetSelectedGariban(selectedGariban);
+        }
+        #endregion
         player.PerformAbility();
         OyunEkrani.Instance.PerformCurrentPlayerAction();
     }

@@ -11,7 +11,10 @@ public class Hirsiz : Karakterler
         this.hazir = hazir;
         secilmisGariban = null;
     }
-
+    public void SetSelectedGariban(Gariban gariban)
+    {
+        secilmisGariban = gariban;
+    }
     public override void PerformAbility()
     {
         if (secilmisGariban != null && hazir)
