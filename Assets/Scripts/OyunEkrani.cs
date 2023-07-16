@@ -37,6 +37,7 @@ public class OyunEkrani : MonoBehaviour
     private void Start()
     {
         
+        
         playerNames = PlayerManager.Instance.GetPlayerNames();
         players = new List<Karakterler>();
         currentPlayerIndex = 0;
@@ -92,7 +93,13 @@ public class OyunEkrani : MonoBehaviour
         int playerBoxIndex = currentPlayerIndex % playerBoxContainer.childCount;
         currentPlayerBox = playerBoxContainer.GetChild(playerBoxIndex).GetComponent<PlayerBox>();
         currentPlayerBox.Initialize(player);
-        currentPlayerBox.actionButton.gameObject.SetActive(true);
+        currentPlayerBox.actionButton.gameObject.SetActive(false);
+
+        if (player is not Gariban)
+        {
+            currentPlayerBox.actionButton.gameObject.SetActive(true);
+           
+        }
         currentPlayerBox.gecButton.gameObject.SetActive(true);
         
         

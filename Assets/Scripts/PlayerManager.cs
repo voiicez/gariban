@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private int playerCount;
     [SerializeField]
-    private List<string> playerNames;
+    public List<string> playerNames;
     [SerializeField]
     public Dictionary<string, string> playerRoles = new Dictionary<string, string>();
 
@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // PlayerManager nesnesini kalýcý hale getir
+            DontDestroyOnLoad(gameObject); // PlayerManager nesnesini kalï¿½cï¿½ hale getir
         }
         else
         {
