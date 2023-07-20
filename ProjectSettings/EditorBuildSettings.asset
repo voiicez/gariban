@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OyunScene.unity
     guid: 151edaa411a579e4f8d320cb687e699f
+  - enabled: 1
+    path: Assets/Scenes/OylamaScene.unity
+    guid: fa18393957c5a5a469e4ae1872c895dc
   m_configObjects: {}

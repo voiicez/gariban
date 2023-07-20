@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Manager.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Hirsiz.cs" />
+    <Compile Include="Assets\Scripts\Sayac.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

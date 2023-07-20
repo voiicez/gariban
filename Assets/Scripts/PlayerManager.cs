@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // PlayerManager nesnesini kal�c� hale getir
+            DontDestroyOnLoad(gameObject); // PlayerManager nesnesini kalici hale getir
         }
         else
         {

@@ -29,5 +29,8 @@ public class Hirsiz : Karakterler
         Debug.Log("H�rs�z Yetene�ini Aktifle�tirdi.");
     }
 
-
+    public bool GetHazir()
+    {
+        return hazir;
+    }
 }

@@ -19,8 +19,11 @@ public class OyunEkrani : MonoBehaviour
     public GameObject oyunScreen;
     public Animator animation;
     public static OyunEkrani Instance;
-   
-    
+
+    public GameObject geceOzetiPanel;
+    public TextMeshProUGUI geceOzetiText;
+
+    private List<string> geceOzetiListesi;
 
     private void Awake()
     {
@@ -117,6 +120,8 @@ public class OyunEkrani : MonoBehaviour
         if (currentPlayerIndex >= players.Count)
         {
             currentPlayerIndex = 0;
+            ShowGeceOzetiPanel();
+
         }
 
         // �lgili oyuncunun bilgilerini g�ster
@@ -146,6 +151,55 @@ public class OyunEkrani : MonoBehaviour
             playerNames[k] = playerNames[n];
             playerNames[n] = value;
         }
+    }
+
+    private void ShowGeceOzetiPanel()
+    {
+        siraGosterici.SetActive(false);
+        geceOzetiPanel.SetActive(true);
+
+        // Gece özeti listesini oluştur ve panelde göster
+        geceOzetiListesi = new List<string>();
+
+        // Her oyuncunun yaptığı aksiyonları ve sonuçları gece özeti listesine ekleyin
+        foreach (Karakterler player in players)
+        {
+            // Örneğin, Hırsızın aksiyonunu ve sonucunu alalım
+            if (player is Hirsiz hirsiz)
+            {
+                bool skillMevcut = hirsiz.GetHazir();
+                if (!skillMevcut)
+                {
+                    string hirsizOlayi = "Bu gece bir soygun yaşandı.";
+                    geceOzetiListesi.Add(hirsizOlayi);
+                }
+                
+
+            }
+
+            // Diğer karakterlerin aksiyonları ve sonuçları...
+        }
+
+        // Gece özeti metin alanına listeleyin
+        geceOzetiText.text = "Gece Özeti:\n\n";
+        for (int i = 0; i < geceOzetiListesi.Count; i++)
+        {
+            geceOzetiText.text += geceOzetiListesi[i];
+            if (i < geceOzetiListesi.Count - 1)
+            {
+                geceOzetiText.text += "\n";
+            }
+        }
+
+        if (geceOzetiListesi.Count==0)
+        {
+            geceOzetiText.text += "Bu gece hiçbir tatsız olay yaşanmadı.";
+        }
+    }
+
+    public void TartismayaGecButton()
+    {
+        SceneManager.LoadScene("OylamaScene");   
     }
 
 
