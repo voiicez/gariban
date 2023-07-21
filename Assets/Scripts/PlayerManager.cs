@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public List<string> playerNames;
     [SerializeField]
     public Dictionary<string, string> playerRoles = new Dictionary<string, string>();
+    public Dictionary<string, int> playerVotes = new Dictionary<string, int>();
+
 
     public static PlayerManager Instance { get; private set; }
     private void Awake()
@@ -71,5 +73,36 @@ public class PlayerManager : MonoBehaviour
         {
             return string.Empty;
         }
+    }
+
+    public void SetPlayerVote(string playerName, int voteCount)
+    {
+        if (playerVotes.ContainsKey(playerName))
+        {
+            playerVotes[playerName] = voteCount;
+        }
+        else
+        {
+            playerVotes.Add(playerName, voteCount);
+        }
+    }
+
+    public int GetPlayerVote(string playerName)
+    {
+        if (playerVotes.ContainsKey(playerName))
+        {
+            return playerVotes[playerName];
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public void RemovePlayer(string playerName)
+    {
+        playerNames.Remove(playerName);
+        playerRoles.Remove(playerName);
+        playerVotes.Remove(playerName);
     }
 }

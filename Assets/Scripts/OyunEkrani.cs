@@ -199,7 +199,7 @@ public class OyunEkrani : MonoBehaviour
 
     public void TartismayaGecButton()
     {
-        SceneManager.LoadScene("OylamaScene");   
+        SceneManager.LoadScene("SayacScene");   
     }
 
 

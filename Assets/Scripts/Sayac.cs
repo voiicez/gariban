@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Sayac : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Sayac : MonoBehaviour
         }
         else
         {
-            sure = 180;
+            SceneManager.LoadScene("OylamaScene");
         }
        
     }
