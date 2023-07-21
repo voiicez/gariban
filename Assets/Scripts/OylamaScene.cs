@@ -14,7 +14,8 @@ public class OylamaScene : MonoBehaviour
     public TextMeshProUGUI sonucText;
 
     private List<string> playerNames;
-    private List<PlayerVotePrefab> playerVotePrefabs;
+    
+    private List<PlayerVotePrefab> playerVotePrefabs = new List<PlayerVotePrefab>(); 
     private int oyVerenOyuncuIndex = 0; // Oy verme sýrasýný takip etmek için indeks
     public static OylamaScene Instance { get; private set; }
 
@@ -23,7 +24,7 @@ public class OylamaScene : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            
         }
         else
         {
@@ -73,12 +74,13 @@ public class OylamaScene : MonoBehaviour
 
         // Oylamayý bitir ve sonuç paneline yazdýr
         sonucText.text = enFazlaOyAlanOyuncu + " oyundan çýkarýldý!";
-        SceneManager.LoadScene("OyunScene");
+        
     }
 
     public void DevamEtButton()
     {
-        SceneManager.LoadScene("OyunScene");
+        SceneManager.LoadScene("OyunScene",LoadSceneMode.Single);
+       
     }
 
     private int GetVoteCount(string playerName)
@@ -86,4 +88,9 @@ public class OylamaScene : MonoBehaviour
         PlayerVotePrefab playerVote = playerVotePrefabs.Find(p => p.GetPlayerName() == playerName);
         return playerVote != null ? playerVote.GetVoteCount() : 0;
     }
+    private void OnDestroy()
+    {
+        playerVotePrefabs.Clear();
+    }
+
 }
