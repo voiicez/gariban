@@ -21,6 +21,12 @@ public class KurumScene : MonoBehaviour
     {
         hazirButton.interactable = false; // Ba�lang��ta haz�r d��mesi etkisiz olsun
         playerCount = 3;
+        playerNames = new List<string>();
+        playerNameInputs = new List<TMP_InputField>();
+        for (int i = 0; i < playerCount; i++)
+        {
+            InstantiatePlayerNameInput();
+        }
     }
 
     public void OyuncuSayisiArttir()

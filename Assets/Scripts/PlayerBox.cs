@@ -12,11 +12,10 @@ public class PlayerBox : MonoBehaviour
     public Button actionButton;
     public Button gecButton;
     private Karakterler player;
-    public TextMeshProUGUI hedef1;
-    public TextMeshProUGUI hedef2;
     public static PlayerBox Instance;
-    public Image hedefListImg;
     public TMP_Dropdown dropdown;
+    public Image hirsizImg;
+    public Image garibanImg;
 
     private void Awake()
     {
@@ -44,11 +43,23 @@ public class PlayerBox : MonoBehaviour
             dropdown.ClearOptions();
             dropdown.AddOptions(garibanIsimleri);
             dropdown.gameObject.SetActive(true);
+            hirsizImg.gameObject.SetActive(true);
         }
         else
         {
+            hirsizImg.gameObject.SetActive(false);
             dropdown.gameObject.SetActive(false);
         }
+
+        if(player is Gariban)
+        {
+            garibanImg.gameObject.SetActive(true);
+        }
+        else
+        {
+            garibanImg.gameObject.SetActive(false);
+        }
+       
     }
 
 

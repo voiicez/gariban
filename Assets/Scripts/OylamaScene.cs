@@ -74,6 +74,7 @@ public class OylamaScene : MonoBehaviour
 
         // Oylamayý bitir ve sonuç paneline yazdýr
         sonucText.text = enFazlaOyAlanOyuncu + " oyundan çýkarýldý!";
+       
         
     }
 

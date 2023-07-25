@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public Dictionary<string, string> playerRoles = new Dictionary<string, string>();
     public Dictionary<string, int> playerVotes = new Dictionary<string, int>();
+    public Dictionary<string, int> playerMoney = new Dictionary<string, int>(); // Paralarý saklamak için yeni bir sözlük ekledik
+
 
 
     public static PlayerManager Instance { get; private set; }
@@ -105,4 +107,6 @@ public class PlayerManager : MonoBehaviour
         playerRoles.Remove(playerName);
         playerVotes.Remove(playerName);
     }
+
+
 }
