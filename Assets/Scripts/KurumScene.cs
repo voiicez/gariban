@@ -16,9 +16,23 @@ public class KurumScene : MonoBehaviour
     private List<string> playerNames;
     private List<TMP_InputField> playerNameInputs;
     public TextMeshProUGUI playerCountText;
+ 
+    public static KurumScene Instance;
 
+         private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
+        
         hazirButton.interactable = false; // Ba�lang��ta haz�r d��mesi etkisiz olsun
         playerCount = 3;
         playerNames = new List<string>();
@@ -161,8 +175,10 @@ public class KurumScene : MonoBehaviour
 
            
         }
-
-        SceneManager.LoadScene("OyunScene"); // Oyun ekran� sahnesine ge�i� yap�lacak sahne ad�n� buraya yaz�n
+        PlayerManager.Instance.SetPlayers();
+        
+        SceneManager.LoadScene("OyunScene");
+       
     }
 
     private void ShuffleRoles(List<string> roles)

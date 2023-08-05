@@ -26,7 +26,7 @@ public class Hirsiz : Karakterler
         hazir = false;
          
        
-        Debug.Log("H�rs�z Yetene�ini Aktifle�tirdi.");
+        Debug.Log("Hirsiz Aksiyon.");
     }
 
     public bool GetHazir()

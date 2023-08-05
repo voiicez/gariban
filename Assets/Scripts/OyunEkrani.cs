@@ -30,6 +30,7 @@ public class OyunEkrani : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            
         }
         else
         {
@@ -42,38 +43,25 @@ public class OyunEkrani : MonoBehaviour
         
         
         playerNames = PlayerManager.Instance.GetPlayerNames();
-        players = new List<Karakterler>();
+        players = PlayerManager.Instance.players;
         currentPlayerIndex = 0;
         ShufflePlayerNames();
         oyunScreen.SetActive(false);
         siraGosterici.SetActive(true);
         animation.SetTrigger("anim");
+        geceOzetiListesi = null;
         
-        // Her oyuncuya rol atayal�m
+        
         foreach (string playerName in playerNames)
         {
-            string role = PlayerManager.Instance.GetPlayerRole(playerName);
-            Karakterler player;
 
-            if (role == "Hirsiz")
-            {
-                player = new Hirsiz(playerName, 100, 30, true, "Hırsız her tur para kazanmaz. Sadece bir kez tüm Garibanların parasını çalabilir. Dikkatli kullan!");
-            }
-            else if (role == "Gariban")
-            {
-                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altın kazanır.");
-            }
-            else
-            {
-                // Bilinmeyen rol, varsay�lan olarak Gariban olarak ata
-                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altın kazanır.");
-            }
+            Karakterler player = players.FirstOrDefault();
 
-            players.Add(player);
+          
             CreatePlayerBox(player);
         }
 
-        // �lk oyuncunun bilgilerini g�ster
+        //Ilk oyuncunun bilgileri.
         ShowPlayerInfo(players[currentPlayerIndex]);
         oyuncuSiraText.text = players[currentPlayerIndex].name;
     }
@@ -124,7 +112,7 @@ public class OyunEkrani : MonoBehaviour
 
         }
 
-        // �lgili oyuncunun bilgilerini g�ster
+        // Ilgili oyuncunun bilgilerini goster
         ShowPlayerInfo(players[currentPlayerIndex]);
         oyunScreen.SetActive(false);
         animation.SetTrigger("anim");

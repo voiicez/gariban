@@ -1,5 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public Dictionary<string, string> playerRoles = new Dictionary<string, string>();
     public Dictionary<string, int> playerVotes = new Dictionary<string, int>();
-    public Dictionary<string, int> playerMoney = new Dictionary<string, int>(); // Paralar� saklamak i�in yeni bir s�zl�k ekledik
-
+    public Dictionary<string, int> playerMoney = new Dictionary<string, int>(); // Paraları saklamak için yeni bir sözlük ekledik
+    public List<Karakterler> players;
 
 
     public static PlayerManager Instance { get; private set; }
@@ -101,12 +102,42 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    
     public void RemovePlayer(string playerName)
     {
+      
         playerNames.Remove(playerName);
         playerRoles.Remove(playerName);
+        var k = players.Where(p => p.name == playerName).FirstOrDefault();
+        players.Remove(k);
         playerVotes.Remove(playerName);
     }
 
+    public void SetPlayers()
+    {
+        players = new List<Karakterler>();
+        foreach (string playerName in playerNames)
+        {
+            string role = PlayerManager.Instance.GetPlayerRole(playerName);
+            Karakterler player;
+
+            if (role == "Hirsiz")
+            {
+                player = new Hirsiz(playerName, 100, 30, true, "Hırsız her tur para kazanmaz. Sadece bir kez tüm Garibanların parasını çalabilir. Dikkatli kullan!");
+            }
+            else if (role == "Gariban")
+            {
+                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altın kazanır.");
+            }
+            else
+            {
+                // Bilinmeyen rol, varsay�lan olarak Gariban olarak ata
+                player = new Gariban(playerName, 100, 30, "Gariban her tur 1 altın kazanır.");
+            }
+
+            players.Add(player);
+            
+        }
+    }
 
 }
